@@ -2,43 +2,65 @@
 #include <fstream>
 #include <string>
 using namespace std;
+
 int main(){
-    struct nodeType{
+
+    struct nodeType{                            //Define a node and its structure.
     string info;                    
     nodeType *link;
     };
+
     string str;
-    string lineFromFile;
-    ifstream myfile("./file.txt");
     string line;
-    nodeType *first, *last, *newNode;
+    string lineFromFile;
+    string filePath;
+
+    cout << "enter file location: " ;
+    cin >> filePath;
+
+    nodeType *first;
+    nodeType *last;
+    nodeType *newNode;
+
+    // ifstream myfile("./file.txt");
+
+    ifstream myfile(filePath);
+
+    int n , count=0;
+
     first = NULL;
     last = NULL;
-    int n;
-    int count=0;
     cout<<"Enter the number of lines in the file that you want to insert: ";
     cin >> n;
-    while(getline(myfile,lineFromFile) && count <= n){
+    cout<< endl;
+
+    while(getline(myfile,lineFromFile) && count <= n - 1){
+        
         str = lineFromFile;
         newNode = new nodeType;
         newNode->info = str;
         newNode->link = NULL;
-        cout << "line " << count << " inserted in the node."<<endl;
+
+        cout << "line " << count + 1 << " inserted in the node "<< count + 1 <<"."<<endl;
+
         if(first == NULL){
             first = newNode;
             last = newNode;
         }
+
         else{
             last->link = newNode;
             last = newNode;
         }
-        count=count + 1;
+        count ++;
     }
-    cout<<"\n";
-    cout<< "Output: ";
+
+    cout<<"\n" << "Output: ";
+    cout << "\n" << "\n";
     while(first != NULL){
-        cout<<first->info<<" ";
+        cout<<first->info<<"\n";
         first = first->link;
     }
+
     return 0;
 }
